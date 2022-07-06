@@ -80,7 +80,11 @@ function ProfileProvider({
   }, [accountId, accountEns])
 
   useEffect(() => {
-    if (!accountId || !isEthAddress) {
+    if (
+      !accountId ||
+      accountId === '0x0000000000000000000000000000000000000000' ||
+      !isEthAddress
+    ) {
       setProfile(clearedProfile)
       return
     }
@@ -102,7 +106,13 @@ function ProfileProvider({
 
   const fetchPoolShares = useCallback(
     async (accountId: string, chainIds: number[], isEthAddress: boolean) => {
-      if (!accountId || !chainIds || !isEthAddress) return
+      if (
+        !accountId ||
+        accountId === '0x0000000000000000000000000000000000000000' ||
+        !chainIds ||
+        !isEthAddress
+      )
+        return
 
       try {
         setIsPoolSharesLoading(true)
